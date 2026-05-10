@@ -829,60 +829,105 @@ h1 {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>Area Calculator</title>
-<style>
-  body { font-family: Arial; padding: 30px; }
-  input, select { padding: 8px; margin: 8px; }
-  button { padding: 10px 20px; background: #003080; color: white; border: none; cursor: pointer; }
-  #result { margin-top: 15px; font-size: 20px; color: green; }
-</style>
+
+<head>
+    <title>Area Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            background-color: #f4f4f4;
+        }
+
+        .calc-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #res {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-  <h2>Area Calculator</h2>
-  <label>Shape:
-    <select id="shape" onchange="updateFields()">
-      <option value="rectangle">Rectangle</option>
-      <option value="triangle">Triangle</option>
-      <option value="circle">Circle</option>
-    </select>
-  </label><br>
 
-  <div id="inputs">
-    <input type="number" id="val1" placeholder="Length">
-    <input type="number" id="val2" placeholder="Width">
-  </div>
+    <div class="calc-card">
+        <h2 style="text-align:center">Area Calculator</h2>
 
-  <button onclick="calcArea()">Calculate Area</button>
-  <div id="result"></div>
+        <label>Value 1 (Base / Radius / Length):</label>
+        <input type="number" id="num1">
 
-<script>
-  function updateFields() {
-    let shape = document.getElementById('shape').value;
-    let html = '';
-    switch(shape) {
-      case 'rectangle': html = '<input type="number" id="val1" placeholder="Length"><input type="number" id="val2" placeholder="Width">'; break;
-      case 'triangle':  html = '<input type="number" id="val1" placeholder="Base"><input type="number" id="val2" placeholder="Height">'; break;
-      case 'circle':    html = '<input type="number" id="val1" placeholder="Radius">'; break;
-    }
-    document.getElementById('inputs').innerHTML = html;
-  }
+        <label>Select Shape:</label>
+        <select id="shape">
+            <option value="rect">Rectangle (L * W)</option>
+            <option value="tri">Triangle (0.5 * B * H)</option>
+            <option value="circ">Circle (π * r²)</option>
+        </select>
 
-  function calcArea() {
-    let shape = document.getElementById('shape').value;
-    let v1 = parseFloat(document.getElementById('val1').value);
-    let v2 = document.getElementById('val2') ? parseFloat(document.getElementById('val2').value) : 0;
-    let area;
+        <label>Value 2 (Height / Width - Ignore for Circle):</label>
+        <input type="number" id="num2">
 
-    switch(shape) {
-      case 'rectangle': area = v1 * v2; break;
-      case 'triangle':  area = 0.5 * v1 * v2; break;
-      case 'circle':    area = Math.PI * v1 * v1; break;
-    }
+        <button onclick="calculateArea()">Calculate Area</button>
 
-    document.getElementById('result').innerText = 'Area = ' + area.toFixed(2);
-  }
-</script>
+        <p>Result: <span id="res">0</span></p>
+    </div>
+
+    <script>
+        function calculateArea() {
+            let v1 = parseFloat(document.getElementById('num1').value);
+            let v2 = parseFloat(document.getElementById('num2').value);
+            let shape = document.getElementById('shape').value;
+            let result = 0;
+
+            switch (shape) {
+                case 'rect': {
+                    result = v1 * v2;
+                    break;
+                }
+                case 'tri': {
+                    result = 0.5 * v1 * v2;
+                    break;
+                }
+                case 'circ': {
+                    // Formula: PI * r * r
+                    result = Math.PI * v1 * v1;
+                    result = result; // Rounds to 2 decimal places
+                    break;
+                }
+                default: {
+                    result = "Select a shape";
+                }
+            }
+
+            document.getElementById('res').innerText = result;
+        }
+    </script>
 </body>
+
 </html>
 ```
 
