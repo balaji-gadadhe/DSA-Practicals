@@ -382,7 +382,46 @@ h1 {
 </body>
 </html>
 ```
+```html
+<!DOCTYPE html>
+<html>
 
+<head>
+    <!-- 1. The Link (Essential) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Bootstrap Basic</title>
+</head>
+
+<body>
+
+    <!-- 2. The Container (Centers everything) -->
+    <div class="container mt-5">
+
+        <h1 class="text-center text-primary">Hello Bootstrap!</h1>
+
+        <!-- 3. The Grid (The Row) -->
+        <div class="row mt-4">
+
+            <!-- 4. The Columns (col-md-6 means 2 equal columns) -->
+            <div class="col-md-6 border p-3">
+                <h3>Left Side</h3>
+                <p>Bootstrap makes this easy.</p>
+                <button class="btn btn-success">Success Button</button>
+            </div>
+
+            <div class="col-md-6 border p-3">
+                <h3>Right Side</h3>
+                <p>No custom CSS needed!</p>
+                <button class="btn btn-danger">Danger Button</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
+```
 ---
 
 ## Practical 9 – Library Signup Form Validation (JavaScript)
