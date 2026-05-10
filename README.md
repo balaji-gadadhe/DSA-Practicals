@@ -429,64 +429,76 @@ h1 {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>Library Signup</title>
-<style>
-  form { width: 350px; margin: 30px auto; font-family: Arial; }
-  input { width: 100%; padding: 8px; margin: 8px 0 5px; box-sizing: border-box; }
-  .err { color: red; font-size: 12px; }
-  button { background: #003080; color: white; padding: 10px; width: 100%; border: none; cursor: pointer; }
-</style>
+
+<head>
+    <title>Library Signup</title>
+    <style>
+        form {
+            width: 300px;
+            margin: auto;
+            font-family: Arial;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #003080;
+            color: white;
+            border: none;
+        }
+    </style>
 </head>
+
 <body>
-<form onsubmit="return validate()">
-  <h2>Library Signup</h2>
 
-  Name: <input type="text" id="name">
-  <div class="err" id="nameErr"></div>
+    <form onsubmit="return validate()">
+        <h2>Library Signup</h2>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="email" placeholder="Email">
+        <input type="text" id="mobile" placeholder="Mobile">
+        <button type="submit">Register</button>
+    </form>
 
-  Email: <input type="text" id="email">
-  <div class="err" id="emailErr"></div>
+    <script>
+        function validate() {
+            let name = document.getElementById('name').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let mobile = document.getElementById('mobile').value.trim();
 
-  Mobile: <input type="text" id="mobile">
-  <div class="err" id="mobileErr"></div>
+            // 1. Empty Check
+            if (name === "" || email === "" || mobile === "") {
+                alert("All fields are required!");
+                return false;
+            }
 
-  <button type="submit">Register</button>
-</form>
+            // 2. Email Validation
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Invalid Email Format!");
+                return false;
+            }
 
-<script>
-function validate() {
-  let valid = true;
+            // 3. Mobile Validation (10 digits, starts with 6-9)
+            let mobileRegex = /^[6-9]\d{9}$/;
+            if (!mobileRegex.test(mobile)) {
+                alert("Invalid 10-digit Mobile Number!");
+                return false;
+            }
 
-  document.getElementById('nameErr').innerText = '';
-  document.getElementById('emailErr').innerText = '';
-  document.getElementById('mobileErr').innerText = '';
+            alert("Registration Successful!");
+            return true;
+        }
+    </script>
 
-  let name = document.getElementById('name').value.trim();
-  let email = document.getElementById('email').value.trim();
-  let mobile = document.getElementById('mobile').value.trim();
-
-  if (name === '') {
-    document.getElementById('nameErr').innerText = 'Name is required.';
-    valid = false;
-  }
-
-  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    document.getElementById('emailErr').innerText = 'Enter a valid email.';
-    valid = false;
-  }
-
-  let mobileRegex = /^[6-9]\d{9}$/;
-  if (!mobileRegex.test(mobile)) {
-    document.getElementById('mobileErr').innerText = 'Enter valid 10-digit mobile number.';
-    valid = false;
-  }
-
-  if (valid) alert('Registration Successful!');
-  return false;
-}
-</script>
 </body>
+
 </html>
 ```
 
