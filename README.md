@@ -1163,66 +1163,111 @@ function validate() {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>Marks Calculator</title>
-<style>
-  body {
-    font-family: Arial;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .container {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    width: 360px;
-  }
-  input { width: 100%; padding: 9px; margin: 6px 0 14px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px; }
-  button { background: #667eea; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
-  button:hover { background: #764ba2; }
-  #result { margin-top: 20px; padding: 15px; background: #f0f4ff; border-radius: 8px; text-align: center; display: none; }
-</style>
+
+<head>
+    <title>Marks Calculator</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: Arial;
+        }
+
+        .container {
+            background: white;
+            width: 320px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background: darkblue;
+        }
+
+        .res-box {
+            text-align: center;
+            padding-left: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        span {
+            color: blue;
+        }
+    </style>
 </head>
+
 <body>
-<div class="container">
-  <h2 style="text-align:center">Marks Calculator</h2>
 
-  Name: <input type="text" id="sname" placeholder="Student name">
-  Sub 1: <input type="number" id="s1" placeholder="Marks">
-  Sub 2: <input type="number" id="s2" placeholder="Marks">
-  Sub 3: <input type="number" id="s3" placeholder="Marks">
-  Sub 4: <input type="number" id="s4" placeholder="Marks">
-  Sub 5: <input type="number" id="s5" placeholder="Marks">
+    <div class="container">
+        <h2>Student Result</h2>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="number" id="s1" placeholder="Subject 1">
+        <input type="number" id="s2" placeholder="Subject 2">
+        <input type="number" id="s3" placeholder="Subject 3">
+        <input type="number" id="s4" placeholder="Subject 4">
+        <input type="number" id="s5" placeholder="Subject 5">
 
-  <button onclick="calculate()">Calculate</button>
+        <button onclick="calculate()">Show Result</button>
 
-  <div id="result">
-    <p id="rname"></p>
-    <p id="rtotal"></p>
-    <p id="rperc"></p>
-    <p id="rgrade"></p>
-  </div>
-</div>
+        <div class="res-box">
+            <p>Name: <span id="resName"></span></p>
+            <p>Total: <span id="resTotal"></span></p>
+            <p>Percentage: <span id="resPer"></span>%</p>
+            <p>Grade: <span id="resGrade"></span></p>
+        </div>
+    </div>
 
-<script>
-  function calculate() {
-    let name = document.getElementById('sname').value;
-    let marks = ['s1','s2','s3','s4','s5'].map(id => parseFloat(document.getElementById(id).value) || 0);
-    let total = marks.reduce((a,b) => a+b, 0);
-    let perc = (total / 500) * 100;
-    let grade = perc >= 75 ? 'A' : perc >= 60 ? 'B' : perc >= 50 ? 'C' : 'F';
+    <script>
+        function calculate() {
+            // 1. Get Values
+            let name = document.getElementById('name').value;
+            let m1 = parseFloat(document.getElementById('s1').value);
+            let m2 = parseFloat(document.getElementById('s2').value);
+            let m3 = parseFloat(document.getElementById('s3').value);
+            let m4 = parseFloat(document.getElementById('s4').value);
+            let m5 = parseFloat(document.getElementById('s5').value);
 
-    document.getElementById('rname').innerHTML = '<b>Student:</b> ' + name;
-    document.getElementById('rtotal').innerHTML = '<b>Total:</b> ' + total + ' / 500';
-    document.getElementById('rperc').innerHTML = '<b>Percentage:</b> ' + perc.toFixed(2) + '%';
-    document.getElementById('rgrade').innerHTML = '<b>Grade:</b> ' + grade;
-    document.getElementById('result').style.display = 'block';
-  }
-</script>
+            // 2. Math
+            let total = m1 + m2 + m3 + m4 + m5;
+            let per = total / 5;
+            let grade = "";
+
+            // 3. Logic
+            if (per >= 75) { grade = "A"; }
+            else if (per >= 60) { grade = "B"; }
+            else if (per >= 50) { grade = "C"; }
+            else { grade = "Fail"; }
+
+            // 4. Direct Display (No complex strings!)
+            document.getElementById('resName').innerText = name;
+            document.getElementById('resTotal').innerText = total;
+            document.getElementById('resPer').innerText = per;
+            document.getElementById('resGrade').innerText = grade;
+        }
+    </script>
 </body>
+
 </html>
 ```
 
