@@ -1035,67 +1035,102 @@ h1 {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>Registration Form</title>
-<style>
-  body { font-family: Arial; background: #f0f4ff; display: flex; justify-content: center; padding: 30px; }
-  .form-box { background: white; padding: 30px; border-radius: 10px; width: 380px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-  input { width: 100%; padding: 9px; margin: 6px 0 4px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; }
-  .err { color: red; font-size: 12px; margin-bottom: 8px; }
-  button { background: #003080; color: white; padding: 12px; width: 100%; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-  #success { color: green; font-weight: bold; margin-top: 15px; text-align: center; display: none; }
-</style>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            font-family: Arial;
+        }
+
+        .container {
+            background: white;
+            width: 350px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            margin: 8px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: darkblue;
+        }
+    </style>
 </head>
+
 <body>
-<div class="form-box">
-  <h2>Student Registration</h2>
 
-  Name: <input type="text" id="name">
-  <div class="err" id="nameErr"></div>
+    <div class="container">
+        <h2>Register</h2>
+        <!-- Form tag added here -->
+        <form id="regForm">
+            <input type="text" id="studentName" placeholder="Full Name">
+            <input type="text" id="studentEmail" placeholder="Email">
+            <input type="password" id="studentPassword" placeholder="Password">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+            <input type="text" id="phoneNumber" placeholder="Phone Number">
 
-  Email: <input type="email" id="email">
-  <div class="err" id="emailErr"></div>
+            <!-- Button works exactly like your calculator buttons -->
+            <button type="submit" onclick="validateForm()">Register Now</button>
+        </form>
+    </div>
 
-  Password: <input type="password" id="pwd">
-  <div class="err" id="pwdErr"></div>
+    <script>
+        function validateForm() {
+            let name = document.getElementById('studentName').value;
+            let email = document.getElementById('studentEmail').value;
+            let password = document.getElementById('studentPassword').value;
+            let confirmPassword = document.getElementById('confirmPassword').value;
+            let phone = document.getElementById('phoneNumber').value;
 
-  Confirm Password: <input type="password" id="cpwd">
-  <div class="err" id="cpwdErr"></div>
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phonePattern = /^[6-9]\d{9}$/;
 
-  Phone: <input type="text" id="phone">
-  <div class="err" id="phoneErr"></div>
+            if (name == "") {
+                alert("Enter Name");
+                return;
+            }
+            if (emailPattern.test(email) == false) {
+                alert("Invalid Email");
+                return;
+            }
+            if (password.length < 6) {
+                alert("Password too short");
+                return;
+            }
+            if (password != confirmPassword) {
+                alert("Passwords don't match");
+                return;
+            }
+            if (phonePattern.test(phone) == false) {
+                alert("Invalid Phone");
+                return;
+            }
 
-  <button onclick="validate()">Register</button>
-  <div id="success">✅ Registration Successful!</div>
-</div>
-
-<script>
-function validate() {
-  let ok = true;
-  const ids = ['name','email','pwd','cpwd','phone'];
-  ids.forEach(id => document.getElementById(id+'Err').innerText = '');
-
-  if (!document.getElementById('name').value.trim()) {
-    document.getElementById('nameErr').innerText = 'Name required'; ok = false;
-  }
-  let email = document.getElementById('email').value;
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('emailErr').innerText = 'Invalid email'; ok = false;
-  }
-  let pwd = document.getElementById('pwd').value;
-  if (pwd.length < 6) {
-    document.getElementById('pwdErr').innerText = 'Min 6 characters'; ok = false;
-  }
-  if (pwd !== document.getElementById('cpwd').value) {
-    document.getElementById('cpwdErr').innerText = 'Passwords do not match'; ok = false;
-  }
-  if (!/^[6-9]\d{9}$/.test(document.getElementById('phone').value)) {
-    document.getElementById('phoneErr').innerText = 'Invalid phone number'; ok = false;
-  }
-
-  if (ok) document.getElementById('success').style.display = 'block';
-}
-</script>
+            alert("Registration Successful!");
+        }
+    </script>
 </body>
+
 </html>
 ```
 
