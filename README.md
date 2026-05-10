@@ -509,44 +509,69 @@ h1 {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>DOM Dynamic Content</title>
-<style>
-  body { font-family: Arial; text-align: center; padding: 30px; }
-  #output { margin-top: 20px; padding: 15px; background: #eef; border-radius: 8px; }
-  button { margin: 5px; padding: 10px 20px; cursor: pointer; }
-</style>
+
+<head>
+    <title>Simple DOM</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 30px;
+        }
+
+        div#output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef;
+            border-radius: 8px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-  <h2>Dynamic Content with DOM</h2>
-  <button onclick="changeText()">Change Text</button>
-  <button onclick="changeColor()">Change Color</button>
-  <button onclick="addItem()">Add List Item</button>
 
-  <div id="output">
-    <p id="msg">Hello! Click buttons to change content.</p>
-    <ul id="myList"></ul>
-  </div>
+    <h2>DOM Basics</h2>
+    <button onclick="changeText()">Change Text</button>
+    <button onclick="changeColor()">Change Color</button>
+    <button onclick="addItem()">Add Item</button>
 
-<script>
-  let count = 1;
+    <div id="output" id="box">
+        <p id="msg">Original Message</p>
+        <ul id="myList"></ul>
+    </div>
 
-  function changeText() {
-    document.getElementById('msg').innerText = 'Text changed dynamically! Count: ' + count++;
-  }
+    <script>
+        // 1. Change existing text
+        function changeText() {
+            document.getElementById('msg').innerText = "Text Updated! using JS DOM Manipulation.";
+        }
 
-  function changeColor() {
-    let colors = ['#ffcccc', '#ccffcc', '#ccccff', '#ffffcc'];
-    document.getElementById('output').style.background = colors[count % colors.length];
-    count++;
-  }
+        // 2. Change CSS style directly
+        function changeColor() {
+            document.getElementById('output').style.backgroundColor = 'lightcoral';
+        }
 
-  function addItem() {
-    let li = document.createElement('li');
-    li.innerText = 'Item ' + count++;
-    document.getElementById('myList').appendChild(li);
-  }
-</script>
+        // 3. Create a new element from scratch
+        function addItem() {
+            // Create a new <li> tag
+            let li = document.createElement('li');
+
+            // Put text inside the <li>
+            li.innerText = "New List Item";
+
+            // Attach the <li> to the <ul>
+            document.getElementById('myList').appendChild(li);
+        }
+    </script>
+
 </body>
+
 </html>
 ```
 
