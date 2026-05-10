@@ -582,69 +582,116 @@ h1 {
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>Calculator</title>
-<style>
-  body { font-family: Arial; display: flex; justify-content: center; padding: 30px; }
-  .calc { background: #222; padding: 20px; border-radius: 10px; width: 250px; }
-  input { width: 100%; padding: 10px; font-size: 18px; text-align: right; margin-bottom: 10px; box-sizing: border-box; }
-  .btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  button { padding: 12px; font-size: 16px; cursor: pointer; border-radius: 5px; border: none; background: #444; color: white; }
-  button.op { background: #ff9500; }
-  button.eq { background: #00b300; }
-  button.cl { background: #cc0000; }
-</style>
+
+<head>
+    <title>Simple Calculator</title>
+    <style>
+        /* Centers everything on the screen */
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            background-color: #f4f4f4;
+        }
+
+        /* The main box */
+        .calc-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            /* Prevents width issues */
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #res {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-<div class="calc">
-  <input type="text" id="display" readonly value="0">
-  <div class="btns">
-    <button class="cl" onclick="clearDisp()">C</button>
-    <button onclick="appendVal('(')">(</button>
-    <button onclick="appendVal(')')">)</button>
-    <button class="op" onclick="appendVal('/')">÷</button>
 
-    <button onclick="appendVal('7')">7</button>
-    <button onclick="appendVal('8')">8</button>
-    <button onclick="appendVal('9')">9</button>
-    <button class="op" onclick="appendVal('*')">×</button>
+    <div class="calc-card">
+        <h2 style="text-align:center">Calculator</h2>
 
-    <button onclick="appendVal('4')">4</button>
-    <button onclick="appendVal('5')">5</button>
-    <button onclick="appendVal('6')">6</button>
-    <button class="op" onclick="appendVal('-')">−</button>
+        <label>Enter First Number:</label>
+        <input type="number" id="num1">
 
-    <button onclick="appendVal('1')">1</button>
-    <button onclick="appendVal('2')">2</button>
-    <button onclick="appendVal('3')">3</button>
-    <button class="op" onclick="appendVal('+')">+</button>
+        <label>Select Operation:</label>
+        <select id="operator">
+            <option value="add">Addition (+)</option>
+            <option value="sub">Subtraction (-)</option>
+            <option value="mul">Multiplication (*)</option>
+            <option value="div">Division (/)</option>
+        </select>
 
-    <button onclick="appendVal('0')">0</button>
-    <button onclick="appendVal('.')">.</button>
-    <button onclick="deleteLast()">⌫</button>
-    <button class="eq" onclick="calculate()">=</button>
-  </div>
-</div>
+        <label>Enter Second Number:</label>
+        <input type="number" id="num2">
 
-<script>
-  let disp = document.getElementById('display');
+        <button onclick="calculate()">Calculate Result</button>
 
-  function appendVal(val) {
-    if (disp.value === '0') disp.value = val;
-    else disp.value += val;
-  }
+        <p>Result: <span id="res">0</span></p>
+    </div>
 
-  function clearDisp() { disp.value = '0'; }
+    <script>
+        function calculate() {
+            let n1 = parseFloat(document.getElementById('num1').value);
+            let n2 = parseFloat(document.getElementById('num2').value);
+            let op = document.getElementById('operator').value;
+            let result = 0;
 
-  function deleteLast() {
-    disp.value = disp.value.length > 1 ? disp.value.slice(0, -1) : '0';
-  }
+            switch (op) {
+                case 'add': {
+                    result = n1 + n2;
+                    break;
+                }
+                case 'sub': {
+                    result = n1 - n2;
+                    break;
+                }
+                case 'mul': {
+                    result = n1 * n2;
+                    break;
+                }
+                case 'div': {
+                    if (n2 !== 0) {
+                        result = n1 / n2;
+                    } else {
+                        result = "Error: Div by 0";
+                    }
+                    break;
+                }
+                default: {
+                    result = "Invalid";
+                }
+            }
 
-  function calculate() {
-    try { disp.value = eval(disp.value); }
-    catch { disp.value = 'Error'; }
-  }
-</script>
+            document.getElementById('res').innerText = result;
+        }
+    </script>
+
 </body>
+
 </html>
 ```
 
